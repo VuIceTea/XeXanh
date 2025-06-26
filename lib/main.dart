@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Xe Xanh',
       theme: ThemeData(
         fontFamily: 'Mulish',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/product-detail': (context) {
           final Map<String, dynamic> product =
-              ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+              ModalRoute.of(context)!.settings.arguments
+                  as Map<String, dynamic>;
           return ProductDetail(product: product);
         },
       },

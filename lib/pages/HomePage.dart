@@ -288,23 +288,6 @@ class _HomePage extends State<HomePage> {
         'Hệ thống trợ lái nâng cao.',
         'Trần kính toàn cảnh (tùy chọn)',
       ],
-      'titles': [
-        'Triết lý thiết kế “Vũ Trụ Phi Đối Xứng“',
-        'Trải nghiệm lái phấn khích',
-        'Công suất tối đa 150 kW*; Mô men xoắn cực đại 310 Nm*',
-        'Chi phí lăn bánh hấp dẫn',
-        'Chi phí vận hành tối ưu',
-        ' Chi phí năng lượng chỉ từ ~533 VNĐ/km*. ',
-        '(*Giả định khách hàng đi 3.000 km/tháng và giá điện tính theo đơn giá bậc 5 cập nhật tại tháng 11/2023 (3.355 VNĐ/số).)',
-        'Hậu mãi cực tốt',
-      ],
-      'descriptions': [
-        ' Thiết kế ngoại thất thể hiện sự tự do, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ. ',
-        '(* Thông số bản Plus)',
-        'Mức giá lăn bánh cạnh tranh (được miễn phí lệ phí trước bạ trong 2 năm từ 1/3/2025 theo Nghị định số 51/2025/NĐ - CP)',
-        '(*Giả định khách hàng đi 3.000 km/tháng và giá điện tính theo đơn giá bậc 5 cập nhật tại tháng 11/2023 (3.355 VNĐ/số).)',
-        ' Bảo hành 10 năm/200.000 km (tùy điều kiện nào đến trước); Xưởng dịch vụ không ngày nghỉ, sửa chữa lưu động, dịch vụ sạc pin lưu động/cứu hộ 24/7... ',
-      ],
       'sub_titles': [
         'Lấy cảm hứng từ vũ trụ và các vật thể bay trong không gian, VF 7 hiện thân cho sự tự do, công nghệ, thời đại, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ.',
         'Những đường nét và hình khối được sử dụng nhịp nhàng và tinh tế, mang đến cho chủ nhân VF 7 không gian trải nghiệm đầy phóng khoáng và tràn đầy năng lượng; song vẫn không làm mất đi sự tối giản, tinh khiết và thời trang vốn có của mẫu xe đánh thức mọi đam mê.',
@@ -312,6 +295,8 @@ class _HomePage extends State<HomePage> {
         'Tận hưởng hành trình trong không gian riêng tư và rộng rãi của chiếc xe, nơi mỗi chi tiết mang đậm dấu ấn cá nhân tạo nên cuộc phiêu lưu độc đáo của riêng bạn.',
         'Tất cả tiện nghi đều nằm trong tầm tay người lái, giúp mang tới kết nối liền mạch giữa người và xe.',
         'Mở rộng không gian, mang tới trải nghiệm cao cấp trên mỗi hành trình.',
+        'Ứng dụng công nghệ và trang thiết bị hiện đại nhất, hệ thống trợ lái nâng cao VinFast đem lại trải nghiệm lái thư thái, dễ dàng để bạn an tâm tận hưởng cuộc sống.',
+        'Hỗ trợ lái trên đường cao tốc.',
         'Ứng dụng công nghệ và trang thiết bị hiện đại nhất, hệ thống trợ lái nâng cao VinFast đem lại trải nghiệm lái thư thái, dễ dàng để bạn an tâm tận hưởng cuộc sống.',
       ],
       'section_titles': [
@@ -325,6 +310,134 @@ class _HomePage extends State<HomePage> {
         'Sở hữu 8 túi khí*.',
         'Mô men xoắn cực đại 310 Nm.',
       ],
+      'slider_items': [
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwb8503fdb/reserves/VF7/vf7-uu-diem-1.webp',
+          'title': 'Triết lý thiết kế “Vũ Trụ Phi Đối Xứng“',
+          'description':
+              'Thiết kế ngoại thất thể hiện sự tự do, cá tính, mạnh mẽ và thể thao, thoả mãn mọi tâm hồn đam mê thẩm mỹ và tốc độ.',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwa32334bb/reserves/VF7/vf7-uu-diem-3.webp',
+          'title': 'Trải nghiệm lái phấn khích',
+          'description':
+              'Công suất tối đa 150 kW*; Mô men xoắn cực đại 310 Nm* (*Thông số bản Plus)',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwd20eda94/reserves/VF7/vf7-uu-diem-4.webp',
+          'title': 'Chi phí lăn bánh hấp dẫn',
+          'description':
+              'Mức giá lăn bánh cạnh tranh (được miễn phí lệ phí trước bạ trong 2 năm từ 1/3/2025 theo Nghị định số 51/2025/NĐ - CP)',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwe7e61fdb/reserves/VF7/vf7-uu-diem-5.webp',
+          'title': 'Chi phí vận hành tối ưu',
+          'description':
+              'Chi phí năng lượng chỉ từ ~533 VNĐ/km*. (*Giả định khách hàng đi 3.000 km/tháng và giá điện tính theo đơn giá bậc 5 cập nhật tại tháng 11/2023 (3.355 VNĐ/số).)',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw28fb6184/reserves/VF7/vf7-uu-diem-6.webp',
+          'title': 'Hậu mãi cực tốt',
+          'description':
+              'Bảo hành 10 năm/200.000 km (tùy điều kiện nào đến trước); Xưởng dịch vụ không ngày nghỉ, sửa chữa lưu động, dịch vụ sạc pin lưu động/cứu hộ 24/7...',
+        },
+      ],
+      'slider_items2': [
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw4a2b0002/reserves/VF7/vf7-masterpiece-1.webp',
+          'title': 'Tối ưu tính khí động học',
+          'description':
+              'Nắp capo thấp, trần xe và cửa sổ được vuốt thấp dần về phía sau, giúp tối ưu tính khí động học, tạo sự đầm chắc và ổn định khi di chuyển tốc độ cao.',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwd1f60e64/reserves/VF7/vf7-masterpiece-2.webp',
+          'title': 'Tay nắm cửa',
+          'description':
+              'Tay nắm ẩn trong thân xe, tạo ra sự liền mạch cho không khí đi qua. Mở cửa với thao tác ấn và kéo mang lại trải nghiệm mới lạ, khác biệt với tay nắm cửa truyền thống.',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw7001a727/reserves/VF7/vf7-masterpiece-3.webp',
+          'title': 'La-Zăng thể thao',
+          'description':
+              'Kích thước 20 inch (bản Plus), khẳng định thêm vẻ mạnh mẽ và thể thao cho VF 7.',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw825532ba/reserves/VF7/vf7-masterpiece-4.webp',
+          'title': 'Thân xe với đường gân dập nổi',
+          'description':
+              'Đường gân dập nổi nối liền bên hông xe, tạo sự liền mạch thể thao, phần đuôi xe cơ bắp và góc cạnh tô điểm cho chiếc xe thêm phần mạnh mẽ.',
+        },
+        {
+          'image':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw279996e6/reserves/VF7/vf7-masterpiece-5.webp',
+          'title': 'Gương chiếu hậu',
+          'description':
+              'Gập điện, chỉnh điện, đặt dưới cửa xe giúp hạn chế điểm mù, mở rộng tầm nhìn cho người lái.',
+        },
+      ],
+      'colorOptions': [
+        {
+          'id': 'CE1M',
+          'name': 'Crimson Red',
+          'previewImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw4c3e07c9/reserves/VF7/exterior/product-CE1M.webp',
+          'thumbnailImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw91273af3/reserves/color/exterior/CE1M.webp',
+        },
+        {
+          'id': 'CE1V',
+          'name': 'Zenith Grey',
+          'previewImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwfee77d40/reserves/VF7/exterior/product-CE1V.webp',
+          'thumbnailImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwee1166a3/reserves/color/exterior/CE1V.webp',
+        },
+        {
+          'id': 'CE1W',
+          'name': 'Urban Mint',
+          'previewImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw613293fe/reserves/VF7/exterior/product-CE1W.webp',
+          'thumbnailImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwf71dd9a6/reserves/color/exterior/CE1W.webp',
+        },
+        {
+          'id': 'CE18',
+          'name': 'Infinity Blanc',
+          'previewImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw0c109403/reserves/VF7/exterior/product-CE18.webp',
+          'thumbnailImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw76b01a92/reserves/color/exterior/CE18.webp',
+        },
+        {
+          'id': 'CE11',
+          'name': 'Jet Black',
+          'previewImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwbe2e95be/reserves/VF7/exterior/product-CE11.webp',
+          'thumbnailImage':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw51489d08/reserves/color/exterior/CE11.webp',
+        },
+      ],
+      "feature_list": [
+        "Nội thất rộng rãi (Chiều dài cơ sở 2.840 mm, Dài x Rộng x Cao tương đương 4.545 x 1.890 x 1.635,75 mm).",
+        "Quãng đường chạy một lần sạc đầy 498 km**.",
+        "Sở hữu 8 túi khí*.",
+        "Mô men xoắn cực đại 310 Nm.",
+      ],
+      "max_power": ["59.6", "70.8"],
+      "range_nedc": ["498", "496"],
+      'vehicle_capacity': ['130', '150'],
+      "max_torque": ['250', '310'],
+      'dimensions': '4.545 x 1.890 x 1.635,75',
+      "wheelbase": "2840",
     },
   ];
 

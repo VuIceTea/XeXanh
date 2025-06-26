@@ -12,6 +12,7 @@ import 'package:selling_car/widgets/InteriorSlider.dart';
 import 'package:selling_car/widgets/Register_For_Consultation.dart';
 import 'package:selling_car/widgets/VF5ExteriorSliderState.dart';
 import 'package:selling_car/widgets/VF5InteriorSlider.dart';
+import 'package:selling_car/widgets/VF7/VF7ColorSelector.dart';
 import 'package:selling_car/widgets/VF7/VF7Widget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -101,9 +102,20 @@ class _ProductDetailState extends State<ProductDetail> {
     ),
   );
 
+  late FlickManager flickManagerVF7 = FlickManager(
+    videoPlayerController: VideoPlayerController.networkUrl(
+      Uri.parse(
+        "https://static-bucket-sfcc.vinfastauto.com/6-traffic-jam-and-highway-assist.mp4",
+      ),
+    ),
+  );
+
+  int _selectedColorIndex = 0;
+
   @override
   void dispose() {
     flickManager.dispose();
+    flickManagerVF7.dispose();
     super.dispose();
   }
 
@@ -115,7 +127,7 @@ class _ProductDetailState extends State<ProductDetail> {
           : Colors.grey[100],
       body: Column(
         children: [
-          Header(),
+          Header(productType: widget.product['type']),
           Expanded(
             child: SingleChildScrollView(
               padding: widget.product['type'] == 'C-SUV'
@@ -276,14 +288,14 @@ class _ProductDetailState extends State<ProductDetail> {
                       : const SizedBox(height: 64),
                   _renderProductDetail(),
                   SizedBox(height: 10),
-                  ChargingStation(),
+                  ChargingStation(types: widget.product['type']),
                   SizedBox(height: 50),
                   ...[
                     if (widget.product['type'] == 'Mini Car')
                       _renderSpecifications(),
                   ],
                   SizedBox(height: 50),
-                  RegisterForConsultation(),
+                  RegisterForConsultation(types: widget.product['type']),
                   SizedBox(height: 50),
                   Footer(),
                 ],
@@ -445,32 +457,54 @@ class _ProductDetailState extends State<ProductDetail> {
           );
   }
 
-  Widget _renderSectionTitle(String? sectionTitle, {double fontSize = 22}) {
+  Widget _renderSectionTitle(
+    String? sectionTitle, [
+    double fontSize = 22,
+    Color? color,
+    TextAlign? textAlign,
+  ]) {
     return sectionTitle == null
         ? SizedBox()
         : Text(
+            textAlign: textAlign,
             sectionTitle,
-            style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-          );
-  }
-
-  Widget _renderSubtitle(String? subTitle, {double fontSize = 16}) {
-    return subTitle == null
-        ? SizedBox()
-        : Text(
-            subTitle,
-            textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: fontSize,
-              color: Color.fromRGBO(60, 60, 60, 1),
+              fontWeight: FontWeight.bold,
+              color: color,
             ),
           );
   }
 
-  Widget _renderImageDetail(String? path) {
-    return path == null
-        ? SizedBox()
-        : Image.asset(path, width: double.infinity, fit: BoxFit.cover);
+  Widget _renderSubtitle(
+    String? subTitle, {
+    double fontSize = 16,
+    Color? color,
+    TextAlign textAlign = TextAlign.justify,
+  }) {
+    return subTitle == null
+        ? const SizedBox()
+        : Text(
+            subTitle,
+            textAlign: textAlign,
+            style: TextStyle(
+              fontSize: fontSize,
+              color: color ?? const Color.fromRGBO(60, 60, 60, 1),
+            ),
+          );
+  }
+
+  Widget _renderImageDetail(String? path, {EdgeInsets? padding}) {
+    if (path == null) return const SizedBox();
+
+    final isNetwork = path.startsWith('http') || path.startsWith('https');
+    final image = Image(
+      image: isNetwork ? NetworkImage(path) : AssetImage(path) as ImageProvider,
+      width: double.infinity,
+      fit: BoxFit.cover,
+    );
+
+    return padding != null ? Padding(padding: padding, child: image) : image;
   }
 
   Widget _renderProductDetail() {
@@ -2441,6 +2475,7 @@ nhanh nhất'''),
     required String content1,
     required String title2,
     required String content2,
+    Color? color,
   }) {
     return SizedBox(
       child: Row(
@@ -2452,11 +2487,19 @@ nhanh nhất'''),
               children: [
                 Text(
                   title1,
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                    color: color ?? Colors.black,
+                  ),
                 ),
                 Text(
                   content1,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: color ?? Colors.black,
+                  ),
                 ),
               ],
             ),
@@ -2467,11 +2510,19 @@ nhanh nhất'''),
               children: [
                 Text(
                   title2,
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                    color: color ?? Colors.black,
+                  ),
                 ),
                 Text(
                   content2,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: color ?? Colors.black,
+                  ),
                 ),
               ],
             ),
@@ -2571,7 +2622,7 @@ nhanh nhất'''),
   Widget _renderCUVDetail() {
     final product = widget.product;
     final List<String> introductions = List<String>.from(
-      product['introductions'] ?? [],
+      product['introdutions'] ?? [],
     );
     final List<String> subTitles = List<String>.from(
       product['sub_titles'] ?? [],
@@ -2579,10 +2630,18 @@ nhanh nhất'''),
     final List<String> sectionTitles = List<String>.from(
       product['section_titles'] ?? [],
     );
-    final List<String> titles = List<String>.from(product['titles'] ?? []);
-    final List<String> descriptions = List<String>.from(
-      product['descriptions'] ?? [],
+    final List<Map<String, String>> slides = List<Map<String, String>>.from(
+      product['slider_items'] ?? [],
     );
+    final List<Map<String, String>> sliderItems2 =
+        List<Map<String, String>>.from(product['slider_items2'] ?? []);
+
+    final List<Map<String, String>> colorOptions =
+        List<Map<String, String>>.from(product['colorOptions'] ?? []);
+    final List<String> featuresList = List<String>.from(
+      product['feature_list'] ?? [],
+    );
+    final List<String> models = List<String>.from(product['model'] ?? []);
     return Column(
       children: [
         Image.network(
@@ -2606,7 +2665,6 @@ nhanh nhất'''),
             );
           },
         ),
-
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
           child: Image.network(
@@ -2663,7 +2721,7 @@ nhanh nhất'''),
           ),
         ),
         Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             'Các thông tin sản phẩm có thể thay đổi mà không cần báo trước.',
             style: TextStyle(color: Colors.white),
@@ -2671,7 +2729,7 @@ nhanh nhất'''),
         ),
         SizedBox(height: 60),
         Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             'Tùy chọn cho ngân sách của bạn',
             style: TextStyle(
@@ -2794,11 +2852,216 @@ nhanh nhất'''),
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              _renderIntroduction(product['introdutions'][0], 26, Colors.white),
+              _renderIntroduction(introductions[0], 23, Colors.white),
               SizedBox(height: 20),
-              Image.network(
-                'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw28fb6184/reserves/VF7/vf7-uu-diem-6.webp',
-                fit: BoxFit.cover,
+              VF7SliderWidget(slides: slides),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _renderIntroduction(introductions[1], 23, Colors.white),
+        ),
+        SizedBox(height: 50),
+        VF7ColorSelector(
+          colorOptions: colorOptions,
+          selectedIndex: _selectedColorIndex,
+          onColorSelected: (index) {
+            setState(() {
+              _selectedColorIndex = index;
+            });
+          },
+        ),
+        _renderSectionTitle(sectionTitles[0], 17, Colors.white),
+        SizedBox(height: 30),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: _renderSubtitle(
+                    subTitles[0],
+                    color: Colors.white,
+                    fontSize: 14,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 100),
+                Container(
+                  color: Color.fromRGBO(31, 33, 37, 1),
+                  padding: EdgeInsets.only(
+                    top: 120,
+                    left: 20,
+                    right: 20,
+                    bottom: 20,
+                  ),
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      _renderSubtitle(
+                        subTitles[1],
+                        fontSize: 14,
+                        color: Colors.white,
+                        textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: 25),
+                      Image.network(
+                        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwa8463fe3/reserves/VF7/vf7-img-tech.webp',
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 200,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: Icon(Icons.error, color: Colors.grey[600]),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 25),
+                      _renderSubtitle(
+                        subTitles[2],
+                        fontSize: 14,
+                        color: Colors.white,
+                        textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: 70),
+                      _renderSectionTitle(sectionTitles[1], 18, Colors.white),
+                      SizedBox(height: 30),
+                      VF7SliderWidget(slides: sliderItems2),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _renderIntroduction(
+                    introductions[2],
+                    23,
+                    Colors.white,
+                  ),
+                ),
+                SizedBox(height: 20),
+                _renderImageDetail(
+                  'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw13003da2/reserves/VF7/interior/vf7-noi-that-overview.webp',
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                ),
+                SizedBox(height: 100),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _renderSectionTitle(
+                    sectionTitles[2],
+                    18,
+                    Colors.white,
+                  ),
+                ),
+                SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _renderSubtitle(
+                    subTitles[3],
+                    fontSize: 14,
+                    color: Colors.white,
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                SizedBox(height: 30),
+                _renderImageDetail(
+                  'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw799c891e/reserves/VF7/interior/vf7-noi-that-compare-left.webp',
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: _renderSectionTitle(
+                      sectionTitles[3],
+                      18,
+                      Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _renderSubtitle(
+                    subTitles[4],
+                    fontSize: 14,
+                    color: Colors.white,
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                SizedBox(height: 30),
+                _renderImageDetail(
+                  'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwc54ab921/reserves/VF7/interior/vf7-noi-that-compare-right.webp',
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: _renderSectionTitle(
+                      sectionTitles[4],
+                      18,
+                      Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _renderSubtitle(
+                    subTitles[5],
+                    fontSize: 14,
+                    color: Colors.white,
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                SizedBox(height: 50),
+                SizedBox(
+                  width: 250,
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(20, 100, 244, 1),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(0),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'ĐĂNG KÝ TƯ VẤN',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 40),
+              ],
+            ),
+            Positioned(
+              top: 140,
+              child: Image.network(
+                'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw74d3d2c9/reserves/VF7/vf7-slide-in-croped.webp',
+                fit: BoxFit.contain,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 200,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Center(
@@ -2817,6 +3080,305 @@ nhanh nhất'''),
                   );
                 },
               ),
+            ),
+          ],
+        ),
+        SizedBox(height: 40),
+        Container(
+          width: double.infinity,
+          color: Color.fromRGBO(31, 33, 37, 1),
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              SizedBox(height: 40),
+              _renderIntroduction(introductions[3], 23, Colors.white),
+              SizedBox(height: 30),
+              _renderSubtitle(
+                featuresList[0],
+                fontSize: 14,
+                color: Colors.white,
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(height: 15),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Align(
+                alignment: Alignment.topLeft,
+                child: _renderSubtitle(
+                  featuresList[1],
+                  fontSize: 14,
+                  color: Colors.white,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Align(
+                alignment: Alignment.topLeft,
+                child: _renderSubtitle(
+                  featuresList[2],
+                  fontSize: 14,
+                  color: Colors.white,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Align(
+                alignment: Alignment.topLeft,
+                child: _renderSubtitle(
+                  featuresList[3],
+                  fontSize: 14,
+                  color: Colors.white,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '*Áp dụng cho bản VF7 Plus',
+                      style: TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '*Áp dụng cho bản VF7 Eco',
+                      style: TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              _renderImageDetail(
+                'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwb6ff6250/reserves/VF7/vf7-passion.webp',
+              ),
+              SizedBox(height: 40),
+              Container(
+                width: double.infinity,
+                color: Color.fromRGBO(60, 60, 60, 1),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30, left: 30),
+                        child: _renderIntroduction(
+                          introductions[4],
+                          23,
+                          Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: _renderSectionTitle(
+                          subTitles[7],
+                          15,
+                          Colors.white,
+                          TextAlign.start,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 30, right: 30),
+                        child: _renderSubtitle(
+                          subTitles[8],
+                          fontSize: 12,
+                          color: Colors.white,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    FlickVideoPlayer(flickManager: flickManagerVF7),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+          width: double.infinity,
+          color: Color.fromRGBO(60, 60, 60, 1),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: _renderSectionTitle(
+                  'Tổng quan sự khác biệt',
+                  20,
+                  Colors.white,
+                ),
+              ),
+              SizedBox(height: 30),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                child: _renderASUVSpecifications2(
+                  title1: product['model'][0],
+                  content1: '',
+                  title2: product['model'][1],
+                  content2: '',
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: _renderASUVSpecifications2(
+                  title1: 'Chiều dài cơ sở (mm)',
+                  content1: widget.product['wheelbase'],
+                  title2: '',
+                  content2: widget.product['wheelbase'],
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: _renderASUVSpecifications2(
+                  title1: 'Dài x Rộng x Cao (mm)',
+                  content1: widget.product['dimensions'],
+                  title2: '',
+                  content2: widget.product['dimensions'],
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: _renderASUVSpecifications2(
+                  title1: 'Quãng đường chạy một lần sạc đầy (km)*',
+                  content1: widget.product['range_nedc'][0],
+                  title2: '\n',
+                  content2: widget.product['range_nedc'][1],
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: _renderASUVSpecifications2(
+                  title1: 'Công suất tối đa (kW)',
+                  content1: widget.product['vehicle_capacity'][0],
+                  title2: '',
+                  content2: widget.product['vehicle_capacity'][1],
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: _renderASUVSpecifications2(
+                  title1: 'Mô men xoắn cực đại\n(Nm)',
+                  content1: widget.product['max_torque'][0],
+                  title2: '\n',
+                  content2: widget.product['max_torque'][1],
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: _renderASUVSpecifications2(
+                  title1: 'Dung lượng pin khả dụng\n(kWh)',
+                  content1: widget.product['max_power'][0],
+                  title2: '\n',
+                  content2: widget.product['max_power'][1],
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 50),
+              SizedBox(
+                width: 250,
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Color.fromRGBO(20, 100, 244, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(0),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'XEM CHI TIẾT',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
             ],
           ),
         ),

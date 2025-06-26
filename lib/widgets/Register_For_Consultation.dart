@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RegisterForConsultation extends StatefulWidget {
-  const RegisterForConsultation({super.key});
+  final String types;
+  const RegisterForConsultation({super.key, required this.types});
 
   @override
   _RegisterForConsultationState createState() =>
@@ -22,7 +23,9 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
       children: [
         Container(
           alignment: Alignment.center,
-          color: const Color.fromARGB(255, 207, 207, 207).withOpacity(.3),
+          color: widget.types == 'C-SUV'
+              ? Color.fromARGB(255, 150, 150, 150)
+              : Color.fromARGB(255, 207, 207, 207).withOpacity(.3),
           padding: EdgeInsets.only(top: 64, bottom: 60),
           child: Column(
             children: [
@@ -30,7 +33,7 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
                 'ĐĂNG KÝ TƯ VẤN',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: widget.types == 'C-SUV' ? Colors.white : Colors.black,
                   fontWeight: FontWeight.w900,
                   fontSize: 20,
                   fontStyle: FontStyle.italic,
@@ -41,7 +44,12 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
                 width: 200,
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(width: 1, color: Colors.grey),
+                    bottom: BorderSide(
+                      width: 1,
+                      color: widget.types == 'C-SUV'
+                          ? Colors.white
+                          : Colors.grey,
+                    ),
                   ),
                 ),
               ),
@@ -49,7 +57,12 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
               Text(
                 'Đăng ký ngay để nhận ưu đãi mới nhất và tư vấn từ VinFast.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.black87),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: widget.types == 'C-SUV'
+                      ? Colors.white
+                      : Colors.black87,
+                ),
               ),
               SizedBox(height: 30),
 
@@ -150,7 +163,12 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
                   Flexible(
                     child: RichText(
                       text: TextSpan(
-                        style: TextStyle(fontSize: 14, color: Colors.black87),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: widget.types == 'C-SUV'
+                              ? Colors.white
+                              : Colors.black87,
+                        ),
                         children: [
                           TextSpan(
                             text:
@@ -172,7 +190,9 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
                               child: Text(
                                 'Chính sách Bảo vệ Dữ liệu cá nhân',
                                 style: TextStyle(
-                                  color: Color.fromRGBO(20, 100, 244, 1),
+                                  color: widget.types == 'C-SUV'
+                                      ? const Color.fromARGB(255, 7, 122, 216)
+                                      : Color.fromRGBO(20, 100, 244, 1),
                                 ),
                               ),
                             ),
@@ -192,8 +212,12 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
                   style: FilledButton.styleFrom(
                     backgroundColor: isValidate
                         ? Color.fromRGBO(20, 100, 244, 1)
+                        : widget.types == 'C-SUV'
+                        ? Color.fromRGBO(101, 101, 103, 1)
                         : Colors.grey,
-                    foregroundColor: Colors.white,
+                    foregroundColor: widget.types == 'C-SUV'
+                        ? Colors.white
+                        : Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                     ),
@@ -226,7 +250,10 @@ class _RegisterForConsultationState extends State<RegisterForConsultation> {
             '• Một số tính năng sẽ chưa có sẵn hoặc chưa được kích hoạt tại thời điểm giao xe cho Khách hàng.\n'
             '• Một số tính năng nâng cao có thể thuộc gói dịch vụ ADAS và Smart Services thu phí.\n'
             '• Quãng đường di chuyển được tính toán theo kiểm định tiêu chuẩn, thực tế có thể khác tùy điều kiện sử dụng.',
-            style: TextStyle(fontSize: 13, color: Colors.black87),
+            style: TextStyle(
+              fontSize: 13,
+              color: widget.types == 'C-SUV' ? Colors.white : Colors.black87,
+            ),
             textAlign: TextAlign.left,
           ),
         ),
