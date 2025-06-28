@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Header extends StatefulWidget {
   final String? productType;
@@ -54,10 +53,16 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SvgPicture.asset(
-            "assets/images/logo-mobile.svg",
-            height: 80,
-            color: logoColor,
+          SizedBox(
+            width: 120,
+            child: Padding(
+              padding: EdgeInsets.only(top: 45),
+              child: Image.asset(
+                "assets/images/logo.png",
+                fit: BoxFit.cover,
+                color: logoColor,
+              ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 45),

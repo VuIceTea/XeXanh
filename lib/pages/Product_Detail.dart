@@ -42,80 +42,37 @@ class _ProductDetailState extends State<ProductDetail> {
   int _currentIndex4 = 0;
   int selectedModelIndex = 0;
 
-  final List<Map<String, String>> _images = [
-    {
-      'url':
-          'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw517acfba/reserves/VF6/exterior-vf6-1.webp',
-      'alt': 'VinFast VF 6',
-    },
-    {
-      'url':
-          'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwb1801660/reserves/VF6/exterior-vf6-2.webp',
-      'alt': 'VinFast VF 6',
-    },
-  ];
-
-  final List<Map<String, String>> _images2 = [
-    {
-      'url':
-          'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw3cec264f/reserves/VF6/interior-vf6-1.jpg',
-      'alt': 'VinFast VF 6',
-    },
-    {
-      'url':
-          'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw5e97d502/reserves/VF6/interior-vf6-2.jpg',
-      'alt': 'VinFast VF 6',
-    },
-  ];
-
-  final List<Map<String, String>> _images3 = [
-    {
-      'url':
-          'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw85404d6b/reserves/VF6/technology-vf6-3.jpg',
-      'alt': 'VinFast VF 6',
-    },
-    {
-      'url':
-          'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwff8bee22/reserves/VF6/technology-vf6-4.jpg',
-      'alt': 'VinFast VF 6',
-    },
-  ];
-
   final CarouselSliderController _carouselController =
       CarouselSliderController();
   int _currentIndex5 = 0;
 
-  final List<String> _images4 = [
-    'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw645188ef/reserves/VF6/VF6-Lifestyle-01.jpg',
-    'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw728cff84/reserves/VF6/VF6-Lifestyle-02.jpg',
-    'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwa7b70283/reserves/VF6/VF6-Lifestyle-03.jpg',
-    'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwc530fef9/reserves/VF6/VF6-Lifestyle-04.jpg',
-    'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw1135ee4f/reserves/VF6/VF6-Lifestyle-05.jpg',
-    'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwe7e90ba1/reserves/VF6/VF6-Lifestyle-06.jpg',
-  ];
-
-  late FlickManager flickManager = FlickManager(
-    videoPlayerController: VideoPlayerController.networkUrl(
-      Uri.parse(
-        "https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw3bedfd7b/reserves/VF3/TVC_VF3_Online_1080.mp4",
-      ),
-    ),
-  );
-
-  late FlickManager flickManagerVF7 = FlickManager(
-    videoPlayerController: VideoPlayerController.networkUrl(
-      Uri.parse(
-        "https://static-bucket-sfcc.vinfastauto.com/6-traffic-jam-and-highway-assist.mp4",
-      ),
-    ),
-  );
+  FlickManager? flickManager;
+  FlickManager? flickManagerVF7;
 
   int _selectedColorIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize flickManager only if video URL is non-null
+    if (widget.product['video'] != null && widget.product['video'].isNotEmpty) {
+      flickManager = FlickManager(
+        videoPlayerController: VideoPlayerController.networkUrl(
+          Uri.parse(widget.product['video']),
+        ),
+      );
+      flickManagerVF7 = FlickManager(
+        videoPlayerController: VideoPlayerController.networkUrl(
+          Uri.parse(widget.product['video']),
+        ),
+      );
+    }
+  }
+
+  @override
   void dispose() {
-    flickManager.dispose();
-    flickManagerVF7.dispose();
+    flickManager?.dispose();
+    flickManagerVF7?.dispose();
     super.dispose();
   }
 
@@ -552,7 +509,13 @@ class _ProductDetailState extends State<ProductDetail> {
         if (subtitles.isNotEmpty) _renderSubtitle(subtitles[0]),
         const SizedBox(height: 30),
 
-        FlickVideoPlayer(flickManager: flickManager),
+        if (flickManager != null)
+          FlickVideoPlayer(flickManager: flickManager!)
+        else
+          SizedBox(
+            height: 200,
+            child: Center(child: Text('Video không khả dụng')),
+          ),
         const SizedBox(height: 30),
 
         if (introductions.length > 1) _renderIntroduction(introductions[1]),
@@ -1014,32 +977,12 @@ class _ProductDetailState extends State<ProductDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _renderImageDetail('assets/images/vf5-hero-sp.webp'),
+        _renderImageDetail(product['banner']),
         _renderImageASUVCar(
-          photos: List<String>.from([
-            'assets/images/vf5-color-yellow.webp',
-            'assets/images/vf5-color-green.webp',
-            'assets/images/vf5-color-blue.webp',
-            'assets/images/vf5-color-grey.webp',
-          ]),
-          colorType: List<String>.from([
-            'VF 5 - SUMMER YELLOW',
-            'VF 5 - URBAN MINT',
-            'VF 5 - SKY BLUE',
-            'VF 5 - ZENITH GREY',
-          ]),
-          title: List<String>.from([
-            'Tự Teen Dẫn Lối Tự Do',
-            'Phiêu nhịp sống xanh',
-            'Chuyển động đa Z năng',
-            'Toàn tâm công tác',
-          ]),
-          subTitle: List<String>.from([
-            'Chọn khai mở cung đường mới thay vì lối mòn rập khuôn, năng lượng từ Summer Yellow giúp Kaity tự tin vào chất trẻ trung trong mình - để tinh thần tự do phóng khoáng luôn vượt lên những rào cản không tên. Giới hạn sẽ không bao giờ nằm trong từ điển cuộc sống, một khi có sắc vàng của VinFast 5 dẫn lối.',
-            'Hiện đại với sắc xanh tươi mát, sống động và thân thiện với môi trường. Màu xanh mint mang đến cho Hà cảm giác tươi mới, đầy năng lượng, giúp Hà tận hưởng nhịp sống đô thị một cách trọn vẹn và đầy cảm hứng.',
-            'Hơn cả một màu sắc, Sky Blue đối với Amee đại diện cho cá tính đậm nét Gen Z, chất “đa-zi-năng” và phong cách trẻ trung năng động. Mọi chuyển động cùng sắc xanh  Sky Blue chính là tuyên ngôn cho thần thái khác biệt của hội Gen Z.',
-            'Lựa chọn sắc xám chính là lựa chọn thành công - toàn tâm toàn ý cho mọi “công task” trên hành trình sự nghiệp. Là biểu tượng của sự uy tín và mạnh mẽ, GreyD tin rằng Zenith Grey sẽ mang đến thần thái chuyên nghiệp, đẳng cấp và tự tin trên mọi con đường bạn lựa chọn.',
-          ]),
+          photos: List<String>.from(product['photos']),
+          colorType: List<String>.from(product['colorType']),
+          title: List<String>.from(product['title']),
+          subTitle: List<String>.from(product['description']),
         ),
         SizedBox(height: 10),
         VF5InteriorSlider(),
@@ -1795,6 +1738,15 @@ nhanh nhất'''),
     final List<String> images = List<String>.from(
       product['product_image_details'] ?? [],
     );
+    final List<Map<String, String>> exteriorsCarousel =
+        List<Map<String, String>>.from(product['exteriorsCarousel'] ?? []);
+    final List<Map<String, String>> interiorsCarousel =
+        List<Map<String, String>>.from(product['interiorsCarousel'] ?? []);
+    final List<Map<String, String>> technologiesCarousel =
+        List<Map<String, String>>.from(product['technologiesCarousel'] ?? []);
+    final List<String> bottomCarousel = List<String>.from(
+      product['bottomCarousel'] ?? [],
+    );
     final List<String> subTitles = List<String>.from(
       product['sub_titles'] ?? [],
     );
@@ -2008,7 +1960,7 @@ nhanh nhất'''),
             },
             initialPage: _currentIndex2,
           ),
-          items: _images.map((image) {
+          items: exteriorsCarousel.map((image) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -2046,7 +1998,7 @@ nhanh nhất'''),
         SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _images.asMap().entries.map((entry) {
+          children: exteriorsCarousel.asMap().entries.map((entry) {
             return GestureDetector(
               onTap: () => carouselControllerASUV1.animateToPage(entry.key),
               child: Container(
@@ -2109,7 +2061,7 @@ nhanh nhất'''),
             },
             initialPage: _currentIndex3,
           ),
-          items: _images2.map((image) {
+          items: interiorsCarousel.map((image) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -2146,7 +2098,7 @@ nhanh nhất'''),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _images2.asMap().entries.map((entry) {
+          children: interiorsCarousel.asMap().entries.map((entry) {
             return GestureDetector(
               onTap: () => carouselControllerASUV2.animateToPage(entry.key),
               child: Container(
@@ -2189,7 +2141,7 @@ nhanh nhất'''),
             },
             initialPage: _currentIndex4,
           ),
-          items: _images3.map((image) {
+          items: technologiesCarousel.map((image) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -2226,7 +2178,7 @@ nhanh nhất'''),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _images3.asMap().entries.map((entry) {
+          children: technologiesCarousel.asMap().entries.map((entry) {
             return GestureDetector(
               onTap: () => carouselControllerASUV3.animateToPage(entry.key),
               child: Container(
@@ -2476,6 +2428,7 @@ nhanh nhất'''),
     required String title2,
     required String content2,
     Color? color,
+    double? fontsize,
   }) {
     return SizedBox(
       child: Row(
@@ -2496,7 +2449,7 @@ nhanh nhất'''),
                 Text(
                   content1,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: fontsize ?? 15,
                     fontWeight: FontWeight.w600,
                     color: color ?? Colors.black,
                   ),
@@ -2519,7 +2472,7 @@ nhanh nhất'''),
                 Text(
                   content2,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: fontsize ?? 15,
                     fontWeight: FontWeight.w600,
                     color: color ?? Colors.black,
                   ),
@@ -2533,6 +2486,10 @@ nhanh nhất'''),
   }
 
   Widget _buildAlbumSlider() {
+    final product = widget.product;
+    final List<String> bottomCarousel = List<String>.from(
+      product['bottomCarousel'] ?? [],
+    );
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
       child: Column(
@@ -2551,7 +2508,7 @@ nhanh nhất'''),
                 });
               },
             ),
-            items: _images4.map((imageUrl) {
+            items: bottomCarousel.map((imageUrl) {
               return Builder(
                 builder: (BuildContext context) {
                   return Stack(
@@ -2586,7 +2543,7 @@ nhanh nhất'''),
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: _images4.asMap().entries.map((entry) {
+                          children: bottomCarousel.asMap().entries.map((entry) {
                             int index = entry.key;
                             return GestureDetector(
                               onTap: () =>
@@ -3227,7 +3184,13 @@ nhanh nhất'''),
                       ),
                     ),
                     SizedBox(height: 25),
-                    FlickVideoPlayer(flickManager: flickManagerVF7),
+                    if (flickManagerVF7 != null)
+                      FlickVideoPlayer(flickManager: flickManagerVF7!)
+                    else
+                      SizedBox(
+                        height: 200,
+                        child: Center(child: Text('Video không khả dụng')),
+                      ),
                   ],
                 ),
               ),
@@ -3294,6 +3257,7 @@ nhanh nhất'''),
                   title2: '',
                   content2: widget.product['dimensions'],
                   color: Colors.white,
+                  fontsize: 14,
                 ),
               ),
               SizedBox(height: 10),

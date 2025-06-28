@@ -99,7 +99,7 @@ class ChargingStation extends StatelessWidget {
                       ),
                       color: types == 'C-SUV'
                           ? Color.fromRGBO(99, 99, 99, 1)
-                          : Colors.white,
+                          : null,
                     ),
                     child: Padding(
                       padding: types == 'C-SUV'

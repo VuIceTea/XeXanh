@@ -206,6 +206,31 @@ class _HomePage extends State<HomePage> {
       'type': 'A-SUV',
       'name': 'Vinfast VF5',
       'price': '458.000.000 VNĐ',
+      'banner': 'assets/images/vf5-hero-sp.webp',
+      'photos': [
+        'assets/images/vf5-color-yellow.webp',
+        'assets/images/vf5-color-green.webp',
+        'assets/images/vf5-color-blue.webp',
+        'assets/images/vf5-color-grey.webp',
+      ],
+      'colorType': [
+        'VF 5 - SUMMER YELLOW',
+        'VF 5 - URBAN MINT',
+        'VF 5 - SKY BLUE',
+        'VF 5 - ZENITH GREY',
+      ],
+      'title': [
+        'Tự Teen Dẫn Lối Tự Do',
+        'Phiêu nhịp sống xanh',
+        'Chuyển động đa Z năng',
+        'Toàn tâm công tác',
+      ],
+      'description': [
+        'Chọn khai mở cung đường mới thay vì lối mòn rập khuôn, năng lượng từ Summer Yellow giúp Kaity tự tin vào chất trẻ trung trong mình - để tinh thần tự do phóng khoáng luôn vượt lên những rào cản không tên. Giới hạn sẽ không bao giờ nằm trong từ điển cuộc sống, một khi có sắc vàng của VinFast 5 dẫn lối.',
+        'Hiện đại với sắc xanh tươi mát, sống động và thân thiện với môi trường. Màu xanh mint mang đến cho Hà cảm giác tươi mới, đầy năng lượng, giúp Hà tận hưởng nhịp sống đô thị một cách trọn vẹn và đầy cảm hứng.',
+        'Hơn cả một màu sắc, Sky Blue đối với Amee đại diện cho cá tính đậm nét Gen Z, chất “đa-zi-năng” và phong cách trẻ trung năng động. Mọi chuyển động cùng sắc xanh  Sky Blue chính là tuyên ngôn cho thần thái khác biệt của hội Gen Z.',
+        'Lựa chọn sắc xám chính là lựa chọn thành công - toàn tâm toàn ý cho mọi “công task” trên hành trình sự nghiệp. Là biểu tượng của sự uy tín và mạnh mẽ, GreyD tin rằng Zenith Grey sẽ mang đến thần thái chuyên nghiệp, đẳng cấp và tự tin trên mọi con đường bạn lựa chọn.',
+      ],
       'similar_photos': [
         'assets/images/vf5-black.png',
         'assets/images/vf5-blue.png',
@@ -252,6 +277,50 @@ class _HomePage extends State<HomePage> {
       'dimensions': '4.241 x 1.834 x 1.580',
       "wheelbase": "2.730 mm",
       "wheel_size": ['17 inch', "18 inch"],
+      'exteriorsCarousel': [
+        {
+          'url':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw517acfba/reserves/VF6/exterior-vf6-1.webp',
+          'alt': 'VinFast VF 6',
+        },
+        {
+          'url':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwb1801660/reserves/VF6/exterior-vf6-2.webp',
+          'alt': 'VinFast VF 6',
+        },
+      ],
+      'interiorsCarousel': [
+        {
+          'url':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw3cec264f/reserves/VF6/interior-vf6-1.jpg',
+          'alt': 'VinFast VF 6',
+        },
+        {
+          'url':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw5e97d502/reserves/VF6/interior-vf6-2.jpg',
+          'alt': 'VinFast VF 6',
+        },
+      ],
+      'technologiesCarousel': [
+        {
+          'url':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw85404d6b/reserves/VF6/technology-vf6-3.jpg',
+          'alt': 'VinFast VF 6',
+        },
+        {
+          'url':
+              'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwff8bee22/reserves/VF6/technology-vf6-4.jpg',
+          'alt': 'VinFast VF 6',
+        },
+      ],
+      'bottomCarousel': [
+        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw645188ef/reserves/VF6/VF6-Lifestyle-01.jpg',
+        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw728cff84/reserves/VF6/VF6-Lifestyle-02.jpg',
+        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwa7b70283/reserves/VF6/VF6-Lifestyle-03.jpg',
+        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwc530fef9/reserves/VF6/VF6-Lifestyle-04.jpg',
+        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw1135ee4f/reserves/VF6/VF6-Lifestyle-05.jpg',
+        'https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dwe7e90ba1/reserves/VF6/VF6-Lifestyle-06.jpg',
+      ],
       'product_image_details': [
         'assets/images/VF6-banner.webp',
         'assets/images/bottom-banner-mb.webp',
@@ -280,6 +349,8 @@ class _HomePage extends State<HomePage> {
       'name': 'Vinfast VF7',
       'price': ['799.000.000 VNĐ', '949.000.000 VNĐ', '969.000.000 VNĐ'],
       'model': ['VF 7 Eco', 'VF 7 Plus', 'VF 7 Plus Trần kính toàn cảnh'],
+      'video':
+          'https://static-bucket-sfcc.vinfastauto.com/6-traffic-jam-and-highway-assist.mp4',
       'introdutions': [
         'VF 7 là một bước tiến đột phá trong thiết kế xe ô tô của VinFast.',
         'Ngoại thất kế thừa và đổi mới từ hơn trăm năm lịch sử của ngành ô tô.',

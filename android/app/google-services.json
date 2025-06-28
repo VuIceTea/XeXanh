@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "50295525806",
+    "project_id": "xexanh-59829",
+    "storage_bucket": "xexanh-59829.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50295525806:android:6527c9e8c6d1732051f83f",
+        "android_client_info": {
+          "package_name": "com.example.selling_car"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgI41KD5O6_uFuGhXQ8GN-Ce92ENcTGzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
